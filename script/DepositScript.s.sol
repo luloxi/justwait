@@ -3,8 +3,9 @@ pragma solidity 0.8.26;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {JustWait} from "src/JustWait.sol";
+import {Script} from "forge-std/Script.sol";
 
-contract DepositScript {
+contract DepositScript is Script {
     JustWait justWaitInstance;
     IERC20 token;
 
@@ -14,7 +15,9 @@ contract DepositScript {
     }
 
     function run() public {
+        vm.startBroadcast();
         token.approve(address(justWaitInstance), type(uint256).max);
         justWaitInstance.deposit();
+        vm.stopBroadcast();
     }
 }
